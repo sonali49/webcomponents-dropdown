@@ -1,0 +1,1 @@
+import{p as e,b as t}from"./p-1db7cedc.js";(()=>{const t=import.meta.url,d={};return""!==t&&(d.resourcesUrl=new URL(".",t).href),e(d)})().then((e=>t([["p-ebdd3b16",[[1,"button-element"]]],["p-223eb6b0",[[1,"dropdown-integrated-component",{resetValue:[516,"resetvalue"],data:[1],selectedValue:[1537,"selected-value"]}]]]],e)));
