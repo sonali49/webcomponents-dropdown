@@ -1,0 +1,16 @@
+{
+  "entries": [
+    "./components/button-element/button-element.js",
+    "./components/dropdown-dialog/dropdown-dialog.js",
+    "./components/dropdown-integrated-component/dropdown-integrated-component.js",
+    "./components/dropdown-menu/dropdown-menu.js",
+    "./components/dropdown-menu-item/dropdown-menu-item.js"
+  ],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "2.6.0",
+    "typescriptVersion": "4.2.3"
+  },
+  "collections": [],
+  "bundles": []
+}

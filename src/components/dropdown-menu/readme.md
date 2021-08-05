@@ -9,7 +9,7 @@
 
 | Property | Attribute | Description | Type     | Default     |
 | -------- | --------- | ----------- | -------- | ----------- |
-| `title`  | `title`   |             | `string` | `undefined` |
+| `label`  | `label`   |             | `string` | `undefined` |
 
 
 ## Events
