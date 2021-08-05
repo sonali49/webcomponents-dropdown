@@ -53,7 +53,7 @@ export class DropdownIntegratedComponent {
       );
     });
     return [
-      <dropdown-menu title={this.selectedValue}>{listOptions}</dropdown-menu>,
+      <dropdown-menu label={this.selectedValue}>{listOptions}</dropdown-menu>,
     ];
   }
 }

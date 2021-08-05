@@ -25,12 +25,12 @@ export class MyMenu {
       this.items.forEach((item, i) => {
         item.slot = `item-${i}`;
         item.onclick = () => {
-          this.title = item.option;
-        }
+          this.label = item.option;
+        };
       });
     });
   }
-  @Prop({ reflect: true, mutable: true }) title: string;
+  @Prop({ reflect: true, mutable: true }) label: string;
   @Event() openChanged: EventEmitter;
   render() {
     return (
@@ -38,7 +38,7 @@ export class MyMenu {
         <slot></slot>
         <dropdown-dialog onOpenChanged={(event) => this.handleToggle(event)}>
           <slot slot="activator" name="label">
-            {this.title}
+            {this.label}
             <svg
               viewBox="0 0 100 66"
               aria-label={this.open ? "Expanded" : "Collapsed"}

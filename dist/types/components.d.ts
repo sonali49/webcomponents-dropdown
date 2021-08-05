@@ -17,7 +17,7 @@ export namespace Components {
         "selectedValue": string;
     }
     interface DropdownMenu {
-        "title": string;
+        "label": string;
     }
     interface DropdownMenuItem {
         "open": boolean;
@@ -76,8 +76,8 @@ declare namespace LocalJSX {
         "selectedValue"?: string;
     }
     interface DropdownMenu {
+        "label"?: string;
         "onOpenChanged"?: (event: CustomEvent<any>) => void;
-        "title"?: string;
     }
     interface DropdownMenuItem {
         "onOpenChanged"?: (event: CustomEvent<any>) => void;

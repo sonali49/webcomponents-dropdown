@@ -6,7 +6,7 @@ export declare class MyMenu {
   private handleToggle;
   openChangedHandler(open: boolean): void;
   componentWillLoad(): void;
-  title: string;
+  label: string;
   openChanged: EventEmitter;
   render(): any;
 }

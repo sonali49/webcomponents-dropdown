@@ -1,24 +1,40 @@
-import { Component, Host, Prop, h, Element, Event, EventEmitter, Watch } from '@stencil/core';
+import {
+  Component,
+  Host,
+  Prop,
+  h,
+  Element,
+  Event,
+  EventEmitter,
+  Watch,
+  Listen,
+} from "@stencil/core";
 
 @Component({
-  tag: 'dropdown-dialog',
-  styleUrl: 'dropdown-dialog.css',
+  tag: "dropdown-dialog",
+  styleUrl: "dropdown-dialog.css",
   shadow: true,
 })
 export class MyDialog {
   @Element() el: HTMLElement;
   @Prop({ reflect: true, mutable: true }) open: boolean = false;
 
-  @Watch('open')
+  @Watch("open")
   openChangedHandler(open: boolean) {
     this.openChanged.emit({ open });
+  }
+  @Listen("click", { target: "window" })
+  handleWindowClick(event: MouseEvent) {
+    // Only close if we click outside the shadow root
+    if (!event.composedPath().includes(this.el.shadowRoot)) {
+      this.open = false;
+    }
   }
 
   @Event() openChanged: EventEmitter;
   render() {
     return (
       <Host>
-        {/* Add a button with a click listener */}
         <button-element
           onClick={() => {
             this.open = !this.open;
