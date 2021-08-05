@@ -1,31 +1,31 @@
-import { Component, h, Element, Watch, Prop, Event } from '@stencil/core';
+import { Component, h, Element, Watch, Prop, } from "@stencil/core";
 export class DropdownIntegratedComponent {
   dataDidChangeHandler(newValue) {
-    if (typeof newValue === 'string') {
+    if (typeof newValue === "string") {
       this.options = JSON.parse(newValue);
     }
     else {
       this.options = newValue;
     }
   }
-  componentWillLoad() {
-    this.dataDidChangeHandler(this.data);
-  }
   onSelectedValueChanged(newValue, oldValue) {
     if (newValue !== oldValue) {
       this.selectedValue = newValue;
     }
   }
-  onUserSelection(event) {
-    this.selectedValue = event.target.value;
-    this.getChangeSelectedItems.emit(this.selectedValue);
-    return this.selectedValue;
+  componentWillLoad() {
+    this.dataDidChangeHandler(this.data);
   }
   render() {
-    let listOptions = this.options.map(option => {
-      return (h("option", { value: option }, option));
+    let listOptions = this.options.map((option) => {
+      return (h("dropdown-menu-item", { option: option, onClick: () => {
+          this.selectedValue = option;
+        } },
+        h("button-element", null, option)));
     });
-    return [h("select", { onChange: this.onUserSelection.bind(this) }, listOptions)];
+    return [
+      h("dropdown-menu", { title: this.selectedValue }, listOptions),
+    ];
   }
   static get is() { return "dropdown-integrated-component"; }
   static get encapsulation() { return "shadow"; }
@@ -82,22 +82,6 @@ export class DropdownIntegratedComponent {
       "reflect": true
     }
   }; }
-  static get events() { return [{
-      "method": "getChangeSelectedItems",
-      "name": "getChangeSelectedItems",
-      "bubbles": true,
-      "cancelable": true,
-      "composed": true,
-      "docs": {
-        "tags": [],
-        "text": ""
-      },
-      "complexType": {
-        "original": "string",
-        "resolved": "string",
-        "references": {}
-      }
-    }]; }
   static get elementRef() { return "el"; }
   static get watchers() { return [{
       "propName": "data",

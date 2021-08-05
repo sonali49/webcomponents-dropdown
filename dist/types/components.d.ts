@@ -8,10 +8,20 @@ import { HTMLStencilElement, JSXBase } from "./stencil-public-runtime";
 export namespace Components {
     interface ButtonElement {
     }
+    interface DropdownDialog {
+        "open": boolean;
+    }
     interface DropdownIntegratedComponent {
         "data": string | [];
         "resetValue": boolean;
         "selectedValue": string;
+    }
+    interface DropdownMenu {
+        "title": string;
+    }
+    interface DropdownMenuItem {
+        "open": boolean;
+        "option": string;
     }
 }
 declare global {
@@ -21,29 +31,65 @@ declare global {
         prototype: HTMLButtonElementElement;
         new (): HTMLButtonElementElement;
     };
+    interface HTMLDropdownDialogElement extends Components.DropdownDialog, HTMLStencilElement {
+    }
+    var HTMLDropdownDialogElement: {
+        prototype: HTMLDropdownDialogElement;
+        new (): HTMLDropdownDialogElement;
+    };
     interface HTMLDropdownIntegratedComponentElement extends Components.DropdownIntegratedComponent, HTMLStencilElement {
     }
     var HTMLDropdownIntegratedComponentElement: {
         prototype: HTMLDropdownIntegratedComponentElement;
         new (): HTMLDropdownIntegratedComponentElement;
     };
+    interface HTMLDropdownMenuElement extends Components.DropdownMenu, HTMLStencilElement {
+    }
+    var HTMLDropdownMenuElement: {
+        prototype: HTMLDropdownMenuElement;
+        new (): HTMLDropdownMenuElement;
+    };
+    interface HTMLDropdownMenuItemElement extends Components.DropdownMenuItem, HTMLStencilElement {
+    }
+    var HTMLDropdownMenuItemElement: {
+        prototype: HTMLDropdownMenuItemElement;
+        new (): HTMLDropdownMenuItemElement;
+    };
     interface HTMLElementTagNameMap {
         "button-element": HTMLButtonElementElement;
+        "dropdown-dialog": HTMLDropdownDialogElement;
         "dropdown-integrated-component": HTMLDropdownIntegratedComponentElement;
+        "dropdown-menu": HTMLDropdownMenuElement;
+        "dropdown-menu-item": HTMLDropdownMenuItemElement;
     }
 }
 declare namespace LocalJSX {
     interface ButtonElement {
     }
+    interface DropdownDialog {
+        "onOpenChanged"?: (event: CustomEvent<any>) => void;
+        "open"?: boolean;
+    }
     interface DropdownIntegratedComponent {
         "data"?: string | [];
-        "onGetChangeSelectedItems"?: (event: CustomEvent<string>) => void;
         "resetValue"?: boolean;
         "selectedValue"?: string;
     }
+    interface DropdownMenu {
+        "onOpenChanged"?: (event: CustomEvent<any>) => void;
+        "title"?: string;
+    }
+    interface DropdownMenuItem {
+        "onOpenChanged"?: (event: CustomEvent<any>) => void;
+        "open"?: boolean;
+        "option"?: string;
+    }
     interface IntrinsicElements {
         "button-element": ButtonElement;
+        "dropdown-dialog": DropdownDialog;
         "dropdown-integrated-component": DropdownIntegratedComponent;
+        "dropdown-menu": DropdownMenu;
+        "dropdown-menu-item": DropdownMenuItem;
     }
 }
 export { LocalJSX as JSX };
@@ -51,7 +97,10 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "button-element": LocalJSX.ButtonElement & JSXBase.HTMLAttributes<HTMLButtonElementElement>;
+            "dropdown-dialog": LocalJSX.DropdownDialog & JSXBase.HTMLAttributes<HTMLDropdownDialogElement>;
             "dropdown-integrated-component": LocalJSX.DropdownIntegratedComponent & JSXBase.HTMLAttributes<HTMLDropdownIntegratedComponentElement>;
+            "dropdown-menu": LocalJSX.DropdownMenu & JSXBase.HTMLAttributes<HTMLDropdownMenuElement>;
+            "dropdown-menu-item": LocalJSX.DropdownMenuItem & JSXBase.HTMLAttributes<HTMLDropdownMenuItemElement>;
         }
     }
 }

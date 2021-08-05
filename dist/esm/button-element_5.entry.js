@@ -1,27 +1,22 @@
-import { attachShadow, h, Host, createEvent, proxyCustomElement } from '@stencil/core/internal/client';
-export { setAssetPath, setPlatformOptions } from '@stencil/core/internal/client';
+import { r as registerInstance, h, H as Host, c as createEvent, g as getElement } from './index-68d84b98.js';
 
 const buttonElementCss = "button{background:#fff;border:none;height:47px;min-width:207px;font-family:Roboto;font-style:normal;font-weight:normal;font-size:14px;line-height:16px;letter-spacing:-0.01em;padding:16px;color:#171719;cursor:pointer;text-align:start}button:hover{background:#F6F6F9}button:active{background:#C1C6D8}";
 
-const ButtonElement$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    attachShadow(this);
+const ButtonElement = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
   }
   render() {
     return (h(Host, null, h("button", null, h("slot", null))));
   }
-  static get style() { return buttonElementCss; }
 };
+ButtonElement.style = buttonElementCss;
 
 const dropdownDialogCss = ":host{position:relative}dialog{border:1px solid #E2E2E4;border:none;box-shadow:0px 2px 3px rgba(0, 0, 0, 0.1);display:none;inline-size:max-content;padding:0;position:absolute}dialog[open]{display:block;border-radius:10px}";
 
-const MyDialog = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    attachShadow(this);
+const MyDialog = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
     this.openChanged = createEvent(this, "openChanged", 7);
     this.open = false;
   }
@@ -33,18 +28,16 @@ const MyDialog = class extends HTMLElement {
         this.open = !this.open;
       } }, h("slot", { name: "activator" }, "Activate")), h("dialog", { open: this.open }, h("slot", null))));
   }
-  get el() { return this; }
+  get el() { return getElement(this); }
   static get watchers() { return {
     "open": ["openChangedHandler"]
   }; }
-  static get style() { return dropdownDialogCss; }
 };
+MyDialog.style = dropdownDialogCss;
 
-const DropdownIntegratedComponent$1 = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    attachShadow(this);
+const DropdownIntegratedComponent = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
   }
   dataDidChangeHandler(newValue) {
     if (typeof newValue === "string") {
@@ -72,7 +65,7 @@ const DropdownIntegratedComponent$1 = class extends HTMLElement {
       h("dropdown-menu", { title: this.selectedValue }, listOptions),
     ];
   }
-  get el() { return this; }
+  get el() { return getElement(this); }
   static get watchers() { return {
     "data": ["dataDidChangeHandler"],
     "selectedValue": ["onSelectedValueChanged"]
@@ -81,11 +74,9 @@ const DropdownIntegratedComponent$1 = class extends HTMLElement {
 
 const dropdownMenuCss = ":host{display:block;width:207px;border-top:1px solid #e2e2e4;border-bottom:1px solid #e2e2e4;border-radius:4px}menu{list-style:none;padding:0;margin:0;}slot[name=\"label\"]{align-items:center;display:flex}slot[name=\"label\"] svg{fill:currentcolor;block-size:1em;inline-size:0.666em;margin-inline-start:1ex}";
 
-const MyMenu = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    attachShadow(this);
+const MyMenu = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
     this.openChanged = createEvent(this, "openChanged", 7);
     this.items = [];
     this.open = false;
@@ -110,20 +101,18 @@ const MyMenu = class extends HTMLElement {
   render() {
     return (h(Host, null, h("slot", null), h("dropdown-dialog", { onOpenChanged: (event) => this.handleToggle(event) }, h("slot", { slot: "activator", name: "label" }, this.title, h("svg", { viewBox: "0 0 100 66", "aria-label": this.open ? "Expanded" : "Collapsed" }, h("polygon", { points: this.open ? "0 66.6, 100 66.6, 50 0" : "0 0, 100 0, 50 66.6" }))), h("menu", { onClick: () => (this.open = !this.open) }, this.items.map((_, i) => (h("li", null, h("slot", { name: `item-${i}` }))))))));
   }
-  get el() { return this; }
+  get el() { return getElement(this); }
   static get watchers() { return {
     "open": ["openChangedHandler"]
   }; }
-  static get style() { return dropdownMenuCss; }
 };
+MyMenu.style = dropdownMenuCss;
 
 const dropdownMenuItemCss = ":host{display:block;height:47px;width:208px;border-top:1px solid #E2E2E4;background-color:#fff}";
 
-const MyMenuItem = class extends HTMLElement {
-  constructor() {
-    super();
-    this.__registerHost();
-    attachShadow(this);
+const MyMenuItem = class {
+  constructor(hostRef) {
+    registerInstance(this, hostRef);
     this.openChanged = createEvent(this, "openChanged", 7);
     this.open = false;
   }
@@ -136,28 +125,7 @@ const MyMenuItem = class extends HTMLElement {
   static get watchers() { return {
     "open": ["openChangedHandler"]
   }; }
-  static get style() { return dropdownMenuItemCss; }
 };
+MyMenuItem.style = dropdownMenuItemCss;
 
-const ButtonElement = /*@__PURE__*/proxyCustomElement(ButtonElement$1, [1,"button-element"]);
-const DropdownDialog = /*@__PURE__*/proxyCustomElement(MyDialog, [1,"dropdown-dialog",{"open":[1540]}]);
-const DropdownIntegratedComponent = /*@__PURE__*/proxyCustomElement(DropdownIntegratedComponent$1, [1,"dropdown-integrated-component",{"resetValue":[516,"resetvalue"],"data":[1],"selectedValue":[1537,"selected-value"]}]);
-const DropdownMenu = /*@__PURE__*/proxyCustomElement(MyMenu, [1,"dropdown-menu",{"title":[1537],"items":[32],"open":[32]}]);
-const DropdownMenuItem = /*@__PURE__*/proxyCustomElement(MyMenuItem, [1,"dropdown-menu-item",{"option":[1537],"open":[1540]}]);
-const defineCustomElements = (opts) => {
-  if (typeof customElements !== 'undefined') {
-    [
-      ButtonElement,
-  DropdownDialog,
-  DropdownIntegratedComponent,
-  DropdownMenu,
-  DropdownMenuItem
-    ].forEach(cmp => {
-      if (!customElements.get(cmp.is)) {
-        customElements.define(cmp.is, cmp, opts);
-      }
-    });
-  }
-};
-
-export { ButtonElement, DropdownDialog, DropdownIntegratedComponent, DropdownMenu, DropdownMenuItem, defineCustomElements };
+export { ButtonElement as button_element, MyDialog as dropdown_dialog, DropdownIntegratedComponent as dropdown_integrated_component, MyMenu as dropdown_menu, MyMenuItem as dropdown_menu_item };

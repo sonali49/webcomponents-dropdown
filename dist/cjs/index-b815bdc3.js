@@ -135,6 +135,11 @@ const getScopeId = (cmp, mode) => 'sc-' + (cmp.$tagName$);
  * Don't add values to these!!
  */
 const EMPTY_OBJ = {};
+/**
+ * Namespaces
+ */
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const HTML_NS = 'http://www.w3.org/1999/xhtml';
 const isDef = (v) => v != null;
 const isComplexType = (o) => {
     // https://jsperf.com/typeof-fn-object/5
@@ -320,8 +325,15 @@ const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
         elm = newVNode.$elm$ = doc.createTextNode(newVNode.$text$);
     }
     else {
+        if (!isSvgMode) {
+            isSvgMode = newVNode.$tag$ === 'svg';
+        }
         // create element
-        elm = newVNode.$elm$ = (doc.createElement(newVNode.$tag$));
+        elm = newVNode.$elm$ = (doc.createElementNS(isSvgMode ? SVG_NS : HTML_NS, newVNode.$tag$)
+            );
+        if (isSvgMode && newVNode.$tag$ === 'foreignObject') {
+            isSvgMode = false;
+        }
         // add css classes, attrs, props, listeners, etc.
         {
             updateElement(null, newVNode, isSvgMode);
@@ -340,6 +352,16 @@ const createElm = (oldParentVNode, newParentVNode, childIndex, parentElm) => {
                     // append our new node
                     elm.appendChild(childNode);
                 }
+            }
+        }
+        {
+            if (newVNode.$tag$ === 'svg') {
+                // Only reset the SVG context when we're exiting <svg> element
+                isSvgMode = false;
+            }
+            else if (elm.tagName === 'foreignObject') {
+                // Reenter SVG context when we're exiting <foreignObject> element
+                isSvgMode = true;
             }
         }
     }
@@ -451,6 +473,11 @@ const patch = (oldVNode, newVNode) => {
     const tag = newVNode.$tag$;
     const text = newVNode.$text$;
     if (text === null) {
+        {
+            // test if we're rendering an svg element, or still rendering nodes inside of one
+            // only add this to the when the compiler sees we're using an svg somewhere
+            isSvgMode = tag === 'svg' ? true : tag === 'foreignObject' ? false : isSvgMode;
+        }
         // element node
         {
             if (tag === 'slot')
@@ -478,6 +505,9 @@ const patch = (oldVNode, newVNode) => {
         else if (oldChildren !== null) {
             // no new child vnodes, but there are old child vnodes to remove
             removeVnodes(oldChildren, 0, oldChildren.length - 1);
+        }
+        if (isSvgMode && tag === 'svg') {
+            isSvgMode = false;
         }
     }
     else if (oldVNode.$text$ !== text) {

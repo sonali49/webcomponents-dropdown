@@ -8,10 +8,28 @@ export const ButtonElement: {
   new (): ButtonElement;
 };
 
+interface DropdownDialog extends Components.DropdownDialog, HTMLElement {}
+export const DropdownDialog: {
+  prototype: DropdownDialog;
+  new (): DropdownDialog;
+};
+
 interface DropdownIntegratedComponent extends Components.DropdownIntegratedComponent, HTMLElement {}
 export const DropdownIntegratedComponent: {
   prototype: DropdownIntegratedComponent;
   new (): DropdownIntegratedComponent;
+};
+
+interface DropdownMenu extends Components.DropdownMenu, HTMLElement {}
+export const DropdownMenu: {
+  prototype: DropdownMenu;
+  new (): DropdownMenu;
+};
+
+interface DropdownMenuItem extends Components.DropdownMenuItem, HTMLElement {}
+export const DropdownMenuItem: {
+  prototype: DropdownMenuItem;
+  new (): DropdownMenuItem;
 };
 
 /**
